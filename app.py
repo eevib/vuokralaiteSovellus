@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 
@@ -10,3 +10,10 @@ db = SQLAlchemy(app)
 @app.route("/")
 def index():
 	return render_template("index.html")
+
+#@app.route("/login", methods=["POST"])
+#def login():
+#    username = request.form["username"]
+#    password = request.form["password"]
+    # check username and password
+#    return redirect("/")
