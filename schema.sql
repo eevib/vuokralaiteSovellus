@@ -5,4 +5,14 @@ CREATE TABLE users (
     admin INTEGER, 
     visible INTEGER
 );
-
+CREATE TABLE devices (
+    id SERIAL PRIMARY KEY,
+    type TEXT,
+    model TEXT,
+    desription TEXT
+);
+CREATE TABLE customers (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    email TEXT UNIQUE
+);
