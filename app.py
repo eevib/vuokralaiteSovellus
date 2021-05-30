@@ -21,12 +21,10 @@ def login():
     sql = "SELECT password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
-    print("user", user)
     if user == None:
         return render_template("error.html", message="Virheellinen käyttäjätunnus")
     else: 
         hash_value = user[0]
-        print(check_password_hash(hash_value,password))
         if check_password_hash(hash_value,password):
     	    session["username"] = username
     	    return redirect("/mainPage")
@@ -47,6 +45,12 @@ def newUser():
 def register():
     username = request.form["username"]
     password = request.form["password"]
+    sql = "SELECT password FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    users = len(result.fetchall())
+    print(users)
+    if users > 0:
+        return render_template("error.html", message="Käyttäjätunnus on jo käytössä, valitse toinen.")
     if len(password) < 3 or len(username) < 3: 
          return render_template("error.html", message="Käyttäjätunnus ja salasana on oltava vähintään 3 merkkiä pitkä.")
     else: 
