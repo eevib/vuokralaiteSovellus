@@ -7,7 +7,7 @@ CREATE TABLE users (
 );
 CREATE TABLE devices (
     id SERIAL PRIMARY KEY,
-    type TEXT,
+    deviceType TEXT,
     model TEXT,
     desription TEXT
 );

@@ -21,14 +21,18 @@ def login():
     sql = "SELECT password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
+    print("user", user)
     if user == None:
-        return render_template("error.html", message="Virheellinen käyttjätunnus tai salasana")
+        return render_template("error.html", message="Virheellinen käyttäjätunnus")
     else: 
         hash_value = user[0]
+        print(check_password_hash(hash_value,password))
         if check_password_hash(hash_value,password):
     	    session["username"] = username
-        return redirect("/mainPage")
-    
+    	    return redirect("/mainPage")
+        else:
+            return render_template("error.html", message="Virheellinen salasana")
+        
     
 @app.route("/logout")
 def logout():
@@ -50,7 +54,8 @@ def register():
         sql = "INSERT INTO users (username,password) VALUES (:username, :password)"
         db.session.execute(sql, {"username":username,"password":hash_value})
         db.session.commit()
-    return redirect("/")
+        session["username"] = username
+    return redirect("/mainPage")
 
 @app.route("/mainPage")
 def mainPage():
@@ -68,3 +73,18 @@ def addCustomer():
     db.session.execute(sql, {"name":name,"email":email})
     db.session.commit()
     return redirect("/mainPage")
+
+@app.route("/devices")
+def devices():
+    return render_template("devices.html")
+
+@app.route("/addDevice", methods=["POST"])
+def addDevice():
+#    deviceType = request.form["deviceType"]
+#    model = request.form["model"]
+#    description = request.form["description"]
+#    sql = "INSERT INTO devices (deviceType,model,description) VALUES (:deviceType, :model, :description)"
+#    db.session.execute(sql, {"deviceType":deviceType,"model":model,"description":description})
+#    db.session.commit()
+    return redirect("/mainPage")
+    
