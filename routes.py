@@ -3,12 +3,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask import redirect, render_template, request, session
 from db import db
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def index():
-    sql = "SELECT * from customers"
-    result = db.session.execute(sql)
-    customers = result.fetchall()
-    return render_template("index.html", customers=customers)
+    return render_template("index.html")
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -47,7 +44,7 @@ def register():
     if users > 0:
         return render_template("error.html", message="Käyttäjätunnus on jo käytössä, valitse toinen.")
     if len(password) < 3 or len(username) < 3 or len(password) > 20 or len(username) > 20: 
-         return render_template("error.html", message="Käyttäjätunnus ja salasana on oltava vähintään 3 merkkiä pitkä ja saavat olla enintään 20 merkkiä pitkät.")
+         return render_template("error.html", message="Käyttäjätunnus ja salasana on oltava vähintään 3 merkkiä pitkiä ja saavat olla enintään 20 merkkiä pitkät.")
     else: 
         hash_value = generate_password_hash(password)
         sql = "INSERT INTO users (username,password) VALUES (:username, :password)"
@@ -56,9 +53,15 @@ def register():
         session["username"] = username
     return redirect("/main_page")
 
-@app.route("/main_page")
+@app.route("/main_page", methods=["GET"])
 def mainPage():
-    return render_template("main_page.html")
+    sql = "SELECT * from customers"
+    result = db.session.execute(sql)
+    customers = result.fetchall()
+    sql = "SELECT * from devices"
+    result = db.session.execute(sql)
+    devices = result.fetchall()
+    return render_template("main_page.html", customers=customers,devices=devices)
 
 @app.route("/customer")
 def customer():
@@ -86,7 +89,7 @@ def devices():
 
 @app.route("/add_device", methods=["POST"])
 def add_device():
-    deviceType = request.form["device_type"]
+    device_type = request.form["device_type"]
     model = request.form["model"]
     description = request.form["description"]
     sql = "INSERT INTO devices (device_type,model,description) VALUES (:device_type, :model, :description)"

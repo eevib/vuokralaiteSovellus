@@ -3,6 +3,12 @@
 <p>Olet kirjautunut nimellä {{ session.username }} </p>
 <p>Laitteet:</p>
 <ul>
+{% for device in devices %}
+<li> {{ device }}
+{% endfor %}
+</ul>
+<p>Asiakkaat:</p>
+<ul>
 {% for customer in customers %}
 <li> {{ customer }}
 {% endfor %}

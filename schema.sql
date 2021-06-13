@@ -9,13 +9,13 @@ CREATE TABLE devices (
     id SERIAL PRIMARY KEY,
     device_type TEXT,
     model TEXT,
-    desription TEXT
+    description TEXT,
     visible INTEGER
 );
 CREATE TABLE customers (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    email TEXT UNIQUE
+    email TEXT UNIQUE,
     visible INTEGER
 );
 CREATE TABLE rents (
@@ -23,6 +23,6 @@ CREATE TABLE rents (
     customer_id INTEGER REFERENCES customers,
     device_id INTEGER REFERENCES devices,
     start_day DATE,
-    end_day DATE
+    end_day DATE,
     visible INTEGER
 );
