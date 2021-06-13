@@ -1,5 +1,12 @@
-<b>Tervetuloa!</b>
+<title>Etusivu</title>
+<h1>Tervetuloa!</h1>
 <p>Olet kirjautunut nimellä {{ session.username }} </p>
+<p>Laitteet:</p>
+<ul>
+{% for customer in customers %}
+<li> {{ customer }}
+{% endfor %}
+</ul>
 <a href="/customer"> Lisää uusi asiakas</a> </br>
 <a href="/devices">Lisää laite</a> </br>
 <a href="/logout">Kirjaudu ulos</a> </br> 
