@@ -2,6 +2,7 @@ from app import app
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import redirect, render_template, request, session
 from db import db
+import users
 
 @app.route("/")
 def index():
@@ -11,18 +12,10 @@ def index():
 def login():
     username = request.form["username"]
     password = request.form["password"]
-    sql = "SELECT password FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
-    user = result.fetchone()
-    if user == None:
-        return render_template("error.html", message="Virheellinen käyttäjätunnus tai salsana")
+    if users.login(username,password):
+        return redirect("/main_page")
     else: 
-        hash_value = user[0]
-        if check_password_hash(hash_value,password):
-    	    session["username"] = username
-    	    return redirect("/main_page")
-        else:
-            return render_template("error.html", message="Virheellinen käyttäjätunnus tai  salsana")
+        return render_template("error.html", message="Virheellinen käyttäjätunnus tai salsana")
     
     
 @app.route("/logout")
@@ -38,20 +31,11 @@ def newUser():
 def register():
     username = request.form["username"]
     password = request.form["password"]
-    sql = "SELECT password FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
-    users = len(result.fetchall())
-    if users > 0:
-        return render_template("error.html", message="Käyttäjätunnus on jo käytössä, valitse toinen.")
-    if len(password) < 3 or len(username) < 3 or len(password) > 20 or len(username) > 20: 
-         return render_template("error.html", message="Käyttäjätunnus ja salasana on oltava vähintään 3 merkkiä pitkiä ja saavat olla enintään 20 merkkiä pitkät.")
-    else: 
-        hash_value = generate_password_hash(password)
-        sql = "INSERT INTO users (username,password) VALUES (:username, :password)"
-        db.session.execute(sql, {"username":username,"password":hash_value})
-        db.session.commit()
-        session["username"] = username
-    return redirect("/main_page")
+    message=users.register(username,password)
+    if message=="1":
+        return redirect("/main_page")
+    else:
+        return render_template("error.html", message=message)
 
 @app.route("/main_page", methods=["GET"])
 def mainPage():
