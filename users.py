@@ -16,6 +16,7 @@ def login(username,password):
         else:
             return False
         
+        
 def register(username,password):
     sql = "SELECT password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
@@ -27,8 +28,7 @@ def register(username,password):
     else: 
         hash_value = generate_password_hash(password)
         sql = "INSERT INTO users (username,password) VALUES (:username, :password)"
-        db.session.execute(sql, {"username":username,"password":hash_value})
+        db.session.execute(sql, {"username":username, "password":hash_value})
         db.session.commit()
         session["username"] = username
-    return "1"
-    
+    return "1"    

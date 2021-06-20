@@ -1,6 +1,15 @@
-<title>Etusivu</title>
+<title>Vuokraus</title>
 <h1>Tervetuloa!</h1>
 <p>Olet kirjautunut nimellä {{ session.username }} </p>
+<form action="/add_rent" method="POST">
+Laite id: <input type="text" name="device_id">
+<p>
+Asiakas id: <input type="text" name="customer_id">
+<p>
+Vuokra alkaa: <input type="date" name="start_date">
+Vuokra päättyy: <input type="date" name="end_date"> </br> </br>
+<input type="submit" value="Vuokraa laite">
+</form>
 <p>Laitteet:</p>
 <ul>
 {% for device in devices %}
@@ -13,15 +22,7 @@
 <li> {{ customer }}
 {% endfor %}
 </ul>
-<p>Laitteet:</p>
-<ul>
-{% for rent in rents %}
-<li> {{ rent }}
-{% endfor %}
-</ul>
 <a href="/customer"> Lisää uusi asiakas</a> </br>
 <a href="/devices">Lisää laite</a> </br>
-<a href="/rents">Vuokraa laite</a> </br>
+<a href="/main_page">Etusivulle</a> </br>
 <a href="/logout">Kirjaudu ulos</a> </br> 
-
-
