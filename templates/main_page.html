@@ -4,19 +4,19 @@
 <p>Laitteet:</p>
 <ul>
 {% for device in devices %}
-<li> {{ device }}
+<li> Id: {{ device[0] }}, {{ device[2] }}
 {% endfor %}
 </ul>
 <p>Asiakkaat:</p>
 <ul>
 {% for customer in customers %}
-<li> {{ customer }}
+<li> Id: {{ customer[2] }}. Nimi: {{ customer[0] }} &nbsp &nbsp Sähköposti: {{ customer[1] }}
 {% endfor %}
 </ul>
-<p>Laitteet:</p>
+<p>Vuokraukset:</p>
 <ul>
 {% for rent in rents %}
-<li> {{ rent }}
+<li> Vuokra-aika: {{ rent[2].strftime("%d.%m.%Y") }}-{{ rent[3].strftime("%d.%m.%Y") }} &nbsp Asiakas: {{ rent[0] }}  &nbsp Asiakkaan sähköposti: {{ rent[1] }} &nbsp Laite: {{ rent[5] }}. {{ rent[4] }}
 {% endfor %}
 </ul>
 <a href="/customer"> Lisää uusi asiakas</a> </br>

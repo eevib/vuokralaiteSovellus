@@ -1,7 +1,7 @@
 <title>Vuokraus</title>
 <h1>Tervetuloa!</h1>
 <p>Olet kirjautunut nimellä {{ session.username }} </p>
-<form action="/add_rent" method="POST">
+<form action="/add_rent" method="POST" onsubmit="return check(this)">
 Laite id: <input type="text" name="device_id">
 <p>
 Asiakas id: <input type="text" name="customer_id">
@@ -9,17 +9,37 @@ Asiakas id: <input type="text" name="customer_id">
 Vuokra alkaa: <input type="date" name="start_date">
 Vuokra päättyy: <input type="date" name="end_date"> </br> </br>
 <input type="submit" value="Vuokraa laite">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+
+<script>
+function check(form) {
+    if (form.device_id.value > 100000 || form.device_id.value == "" {
+        alert("Tarkista laite id");
+        return false;
+    }
+    if (form.customer_id.value > 100000 || form.customer_id.value == "" {
+        alert("Tarkista asiakas id");
+        return false;
+    }
+    if (form.start_date.value == "") {
+        alert("Valiltse vuokran aloitus ja lopetuspäivä.")
+        return false;
+    }    
+    return true;
+}
+</script>
+
 <p>Laitteet:</p>
 <ul>
 {% for device in devices %}
-<li> {{ device }}
+<li> Id: {{ device[0] }}, {{ device[2] }}
 {% endfor %}
 </ul>
 <p>Asiakkaat:</p>
 <ul>
 {% for customer in customers %}
-<li> {{ customer }}
+<li> Id: {{ customer[2] }}. Nimi: {{ customer[0] }} &nbsp &nbsp Sähköposti: {{ customer[1] }}
 {% endfor %}
 </ul>
 <a href="/customer"> Lisää uusi asiakas</a> </br>

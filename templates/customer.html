@@ -1,10 +1,25 @@
 <p>Lisää asiakas</p>
-<form action="/add_customer" method="POST">
+<form action="/add_customer" method="POST" onsubmit="return check(this)">
 Nimi: <input type="text" name="name">
 <p>
 Sähköpostiosoite: <input type="text" name="email">
 <p>
 <input type="submit" value="Lisää asiakas">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <a href="/main_page">Etusivulle</a> </br> 
 <a href="/logout">Kirjaudu ulos</a> </br> 
+
+<script>
+function check(form) {
+    if(form.name.value.length > 50) {
+        alert("Liian pitkä nimi, sallittu maksimipituus on 50 merkkiä.")
+        return false;
+    }
+    if (form.email.value.length > 50) {
+        alert("Liian pitkä sähköposti, sallittu maksimipituus on 50 merkkiä.");
+        return false;
+    }
+    return true;
+    }
+</script>
