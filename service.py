@@ -16,7 +16,7 @@ def add_service(device_id, service_date, description):
     return "1"
 
 def get_services():
-    sql = "SELECT D.device_type, D.model, S.service_date, S.description FROM devices D, services S WHERE S.device_id = D.id AND S.visible = 1"
+    sql = "SELECT D.id, D.device_type, D.model, S.service_date, S.description FROM devices D, services S WHERE S.device_id = D.id AND S.visible = 1"
     result = db.session.execute(sql)
     services = result.fetchall()
     return services

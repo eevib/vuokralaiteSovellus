@@ -1,5 +1,7 @@
-<title>Vuokraus</title>
-<h1>Vuokraa laite</h1>
+{% extends "layout.html" %}
+{% block title %}Vuokraus{% endblock %}
+{% block content %}
+<h2>Vuokraa laite</h2>
 <form action="/add_rent" method="POST" onsubmit="return check(this)">
 Laite id: <input type="text" name="device_id">
 <p>
@@ -10,7 +12,12 @@ Vuokra päättyy: <input type="date" name="end_date"> </br> </br>
 <input type="submit" value="Vuokraa laite">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-
+<p>Vuokraukset:</p>
+<ul>
+{% for rent in rents %}
+<li> Vuokra-aika: {{ rent[2].strftime("%d.%m.%Y") }}-{{ rent[3].strftime("%d.%m.%Y") }} &nbsp Asiakas: {{ rent[0] }}  &nbsp Asiakkaan sähköposti: {{ rent[1] }} &nbsp Laite: {{ rent[5] }}. {{ rent[4] }}
+{% endfor %}
+</ul>
 <script>
 function check(form) {
     if (form.device_id.value > 100000 || form.device_id.value == "" {
@@ -41,9 +48,4 @@ function check(form) {
 <li> Id: {{ customer[2] }}. Nimi: {{ customer[0] }} &nbsp &nbsp Sähköposti: {{ customer[1] }}
 {% endfor %}
 </ul>
-<a href="/main_page">Etusivulle</a> </br> 
-<a href="/customer"> Lisää asiakas</a> </br>
-<a href="/devices">Lisää laite</a> </br>
-<a href="/rents">Vuokraa laite</a> </br>
-<a href="/services">Lisää huolto</a> </br>
-<a href="/logout">Kirjaudu ulos</a> </br> 
+{% endblock %}

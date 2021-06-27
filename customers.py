@@ -30,3 +30,9 @@ def delete_customer(customer_id):
     db.session.execute(sql, {"id":customer_id})
     db.session.commit()
     
+
+def customer_count():
+    sql = "SELECT count(id) FROM customers"
+    result = db.session.execute(sql)
+    customer_count = result.fetchone()
+    return customer_count

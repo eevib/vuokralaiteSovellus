@@ -1,34 +1,8 @@
-<title>Etusivu</title>
-<h1>Tervetuloa!</h1>
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+<h2>Tervetuloa!</h2>
 <p>Olet kirjautunut nimellä {{ session.username }} </p>
-<p>Laitteet:</p>
-<ul>
-{% for device in devices %}
-<li> Id: {{ device[0] }}, {{ device[2] }}
-{% endfor %}
-</ul>
-<p>Asiakkaat:</p>
-<ul>
-{% for customer in customers %}
-<li> Id: {{ customer[2] }}. Nimi: {{ customer[0] }} &nbsp &nbsp Sähköposti: {{ customer[1] }}
-{% endfor %}
-</ul>
-<p>Vuokraukset:</p>
-<ul>
-{% for rent in rents %}
-<li> Vuokra-aika: {{ rent[2].strftime("%d.%m.%Y") }}-{{ rent[3].strftime("%d.%m.%Y") }} &nbsp Asiakas: {{ rent[0] }}  &nbsp Asiakkaan sähköposti: {{ rent[1] }} &nbsp Laite: {{ rent[5] }}. {{ rent[4] }}
-{% endfor %}
-</ul>
-Huollot:
-<ul>
-{% for service in services %}
-<li> Laitetyyppi: {{ service[0] }}, laitemalli: {{ service[1] }}, huoltopäivä: {{ service[2].strftime("%d.%m.%Y") }}, huollon kuvaus: {{ service[3] }}
-{% endfor %}
-</ul>
-<a href="/customer"> Lisää asiakas</a> </br>
-<a href="/devices">Lisää laite</a> </br>
-<a href="/rents">Vuokraa laite</a> </br>
-<a href="/services">Lisää huolto</a> </br>
-<a href="/logout">Kirjaudu ulos</a> </br> 
-
-
+<p>Järjestelmässä on {{ customers[0] }} asiakasta ja {{ devices[0] }} laitetta.</p>
+<p>Välilehdiltä voit lisätä asiakkaita ja laitteita, vuokrata laitteen tai lisätä sille huollon. </p>
+{% endblock %}

@@ -44,16 +44,15 @@ def register():
 
 @app.route("/main_page", methods=["GET"])
 def mainPage():
-    all_devices = device.get_devices()
-    all_customers = customers.get_customers()
-    all_rents = rent.get_rents()
-    all_services = service.get_services()
-    return render_template("main_page.html", customers=all_customers, devices=all_devices, rents=all_rents, services=all_services)
+    devices = device.device_count()
+    customer_count = customers.customer_count()
+    return render_template("main_page.html", devices = devices, customers = customer_count)
 
 
 @app.route("/customer")
 def customer():
-    return render_template("customer.html")
+    all_customers = customers.get_customers()
+    return render_template("customer.html", customers = all_customers)
 
 
 @app.route("/add_customer", methods=["POST"])
@@ -64,14 +63,15 @@ def add_customer():
     email = request.form["email"]
     message = customers.add_customer(name,email)
     if message=="1":
-        return redirect("/main_page")
+        return redirect("/customer")
     else:
         return render_template("error.html", message=message)
      
 
 @app.route("/devices")
 def devices():
-    return render_template("devices.html")
+    all_devices = device.get_devices()
+    return render_template("devices.html", devices = all_devices)
 
 
 @app.route("/add_device", methods=["POST"])
@@ -83,9 +83,10 @@ def add_device():
     description = request.form["description"]
     message = device.add_device(device_type,model,description)
     if message == "1":
-        return redirect("/main_page")
+        return redirect("/devices")
     else:
         return render_template("error.html", message=message) 
+    
     
 @app.route("/add_rent", methods=["POST"])
 def rent_device():
@@ -97,7 +98,7 @@ def rent_device():
     end_date = request.form["end_date"]
     message = rent.rent_device(device_id, customer_id, start_date, end_date)
     if(message=="1"):
-        return redirect("/main_page")
+        return redirect("/rents")
     else:
         return render_template("error.html", message=message)
         
@@ -107,13 +108,16 @@ def rent_device():
 def rents():
     devices = device.get_devices()
     all_customers = customers.get_customers()
-    return render_template("/rents.html", devices = devices, customers = all_customers)
+    all_rents = rent.get_rents()
+    return render_template("/rents.html", devices = devices, customers = all_customers, rents = all_rents)
+
 
 @app.route("/services", methods=["GET", "POST"])
 def services():
     devices = device.get_devices()
     services = service.get_services()
     return render_template("/add_service.html", devices = devices, services = services)
+
 
 @app.route("/add_service", methods=["GET", "POST"])
 def add_service():
@@ -124,7 +128,7 @@ def add_service():
     description = request.form["description"]
     message = service.add_service(device_id, service_date, description)
     if message == "1":
-        return render_template("/main_page.html")
+        return redirect("/services")
     else: 
         return render_template("error.html", message = message)
     

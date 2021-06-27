@@ -18,3 +18,10 @@ def get_devices():
     result = db.session.execute(sql)
     devices = result.fetchall()
     return devices  
+
+
+def device_count():
+    sql = "SELECT count(id) from devices"
+    result = db.session.execute(sql)
+    device_count = result.fetchone()
+    return device_count

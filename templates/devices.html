@@ -1,5 +1,7 @@
-<title>Laitteet</title>
-<h1>Laitteet</h1>
+{% extends "layout.html" %}
+{% block title %}Laitteet{% endblock %}
+{% block content %}
+<h2>Laitteet</h2>
 <p>Lisää laite</p>
 <form action="/add_device" method="POST" onsubmit="return check(this)">
 Tyyppi: <input type="text" name="device_type">
@@ -7,15 +9,16 @@ Tyyppi: <input type="text" name="device_type">
 Malli: <input type="text" name="model">
 <p>
 Kuvaus: <input type="text" name="description"> 
+<p>
 <input type="submit" value="Lisää laite"> 
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-<a href="/main_page">Etusivulle</a> </br> 
-<a href="/customer"> Lisää asiakas</a> </br>
-<a href="/rents">Vuokraa laite</a> </br>
-<a href="/services">Lisää huolto</a> </br>
-<a href="/logout">Kirjaudu ulos</a> </br> 
-
+<p>Laitteet:</p>
+<ul>
+{% for device in devices %}
+<li> Id: {{ device[0] }}, {{ device[2] }}
+{% endfor %}
+</ul>
 <script>
 function check(form) {
     if(form.device_type.value.length > 50 || form.device_type.value.length < 1) {
@@ -33,3 +36,4 @@ function check(form) {
     return true;
 }
 </script>
+{% endblock %}

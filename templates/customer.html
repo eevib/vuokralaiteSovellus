@@ -1,5 +1,7 @@
-<title>Asiakkaat</title>
-<h1>Asiakkaat</h1>
+{% extends "layout.html" %}
+{% block title %}Asiakkaat{% endblock %}
+{% block content %}
+<h2>Asiakkaat</h2>
 <p>Lisää asiakas</p>
 <form action="/add_customer" method="POST" onsubmit="return check(this)">
 Nimi: <input type="text" name="name">
@@ -9,12 +11,13 @@ Sähköpostiosoite: <input type="text" name="email">
 <input type="submit" value="Lisää asiakas">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-<a href="/main_page">Etusivulle</a> </br> 
-<a href="/devices">Lisää laite</a> </br>
-<a href="/rents">Vuokraa laite</a> </br>
-<a href="/services">Lisää huolto</a> </br>
-<a href="/logout">Kirjaudu ulos</a> </br> 
-
+</br>
+<p>Asiakkaat:</p>
+<ul>
+{% for customer in customers %}
+<li> Id: {{ customer[2] }}. Nimi: {{ customer[0] }} &nbsp &nbsp Sähköposti: {{ customer[1] }}
+{% endfor %}
+</ul>
 <script>
 function check(form) {
     if(form.name.value.length > 50) {
@@ -30,5 +33,6 @@ function check(form) {
         return false;
     }    
     return true;
-    }
+}
 </script>
+{% endblock %}
