@@ -1,25 +1,32 @@
-# vuokralaiteSovellus
+# Vuokralaitesovellus
 
 Sovellusta voi testata [Herokussa](https://vuokralaitesovellus.herokuapp.com)
 
 
-Sovelluksen avulla pidetään kirjaa vuokratuista laitteista ja niiden huollosta. Sovellus näyttää vuokralaitteet ja vuokrassa olevat laitteet.
+Sovelluksen avulla pidetään kirjaa vuokratuista laitteista ja niiden huollosta. Sovellus näyttää vuokralaitteet ja vuokrassa olevat laitteet. Sovelluksessa voi luoda tunnuksen ja kirjautua sisään ja ulos, kaikki käyttäjät näkevät kuitenkin samat tiedot. Virheellisiä syötteitä ei sallita ja niistä tulee virheviesti. Toiminnot on sovelluksessa hajautettu omille välilehdille. 
  
 Sovelluksen ominaisuuksia:
-- Käyttäjjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen
-- Pääkäyttäjä voi lisätä ja poistaa vuokralaitteita
-- Pääkäyttäjä voi lisätä käyttäjälle pääkäyttäjän oikeudet
-- Käyttäjä voi lisätä vuokraajan ja vuokrata hänelle laitteen
-- Laitteisiin voi merkata huollon
-- Käyttäjä voi listata laitteita vuokra-ajan umpeutumisen mukaan
-- Käyttäjä voi tutkia tilastoja suosituimmasta vuokrauslaitteesta
-- Laitteille voi lisätä tyypin (esimerkiksi ilmanpuhdistin), kuvauksen, mallin (esimerkiksi Lifa Air 352C), huollot ja vuokrausjaksot
+- Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
+- Käyttäjä voi lisätä asiakkaan ja vuokrata hänelle laitteen.
+- Laitteisiin voi merkata huollon.
+- Laitteet listataan vuokra-ajan umpeutumisen mukaan. 
+- Asiakkaat listataan aakkosjärjestyksessä
+- Asiakkaalta tallennetaan nimi ja sähköpostiosoite.
+- Laitteille annetaan tyyppi (esimerkiksi ilmanpuhdistin) ja malli (esimerkiksi Lifa Air 352C), lisäksi on mahdollista lisätä kuvaus.
+- Laitetta vuokratessa annetaan asiakkaan ja laitteen id, vuokrauksen aloitus ja lopetuspäivä.
+- Huoltoon annetaan laite id, päivämäärä ja kuvaus huollosta. 
 
+  
 
+### Kehitysehdotukset
 
-### Tämän hetken toiminnallisuudet
+Sovellusta on mahdollista kehittää vielä huimasti eteenpäin. Tässä muutama jatkokehitysidea: 
 
-Tällä hetkellä sovellukseen voi luoda käyttäjätunnuksen ja kirjautua. Lisäksi on mahdollista lisätä asiakas ja vuokralaite. Etusivulla näkyvät listaukset laitteista ja asiakkaista, ulkoasu on vielä melko ikävä. Sovelluksessa ei ole tällä hetkellä muuta toiminnallisuutta. 
-
-Jos yrität luoda käyttäjätunnuksen, joka on jo olemassa, saat siitä virheviestin, että se ei ole mahdollista. Salasanan ja käytttäjätunnuksen on lisäksi oltava vähintään 3 merkkiä ja maksimissaan 20 merkkiä pitkät. Myös virheellisestä salasanasta tai käyttäjätunnuksesta tulee virheviesti. 
-
+- Hakutoiminto asiakkaille, laitteille ja vuokrausjaksoille. 
+- Mahdollisuus vuokrata vain vapaana olevia laitteita.
+- Eri käyttäjille vain oman / ryhmän tietojen näyttö.
+- Pääkäyttäjä, joka huolehtisi omaan ryhmään lisäämisestä.
+- Laitteen, asiakkaan, vuokrauksen ja huollon poisto.
+- Tilastojen näyttäminen eri laitteille.
+- Asiakkaiden, laitteiden, huoltojen ja vuokrausten listaus / haku esimerkiksi laitetyypin mukaan. 
+- Mahdollisuus muokata huolto tai vuokraus tapahtumia. 
