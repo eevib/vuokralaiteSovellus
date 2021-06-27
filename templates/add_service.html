@@ -1,0 +1,46 @@
+<title>Huolto</title>
+<h1>Huolto</h1>
+<form action="/add_service" method="POST" onsubmit="return check(this)">
+Laite id: <input type="text" name="device_id">
+<p>
+Huolto päivä: <input type="date" name="service_date">
+</br>
+Kuvaus: <textarea name="description" rows=4 cols="50"></textarea>
+</br>
+<input type="submit" value="Lisää huolto">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+
+Huollot:
+<ul>
+{% for service in services %}
+<li> Laitetyyppi: {{ service[0] }}, laitemalli: {{ service[1] }}, huoltopäivä: {{ service[2].strftime("%d.%m.%Y") }}, huollon kuvaus: {{ service[3] }}
+{% endfor %}
+</ul>
+<p>Laitteet:</p>
+<ul>
+{% for device in devices %}
+<li> Id: {{ device[0] }}, {{ device[2] }}
+{% endfor %}
+</ul>
+
+<a href="/main_page">Etusivulle</a> </br>
+<a href="/customer"> Lisää asiakas</a> </br>
+<a href="/devices">Lisää laite</a> </br>
+<a href="/rents">Vuokraa laite</a> </br>
+<a href="/services">Lisää huolto</a> </br>
+<a href="/logout">Kirjaudu ulos</a> </br> 
+
+<script>
+function check(form) {
+    if(form.device_id.value.length < 1 || form.description.value.length < 1) {
+        alert("Täytä kaikki kentät")
+        return false;
+    }
+    if (form.description.value.length > 300) {
+        alert("Liian pitkä kuvaus, sallittu maksimipituus on 300 merkkiä.");
+        return false;
+    }    
+    return true;
+    }
+</script>

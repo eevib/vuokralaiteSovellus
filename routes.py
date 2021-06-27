@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask import redirect, render_template, request, session, abort
 from db import db
 import device, rent
-import users, customers
+import users, customers, service
 
 @app.route("/")
 def index():
@@ -47,7 +47,8 @@ def mainPage():
     all_devices = device.get_devices()
     all_customers = customers.get_customers()
     all_rents = rent.get_rents()
-    return render_template("main_page.html", customers=all_customers, devices=all_devices, rents=all_rents)
+    all_services = service.get_services()
+    return render_template("main_page.html", customers=all_customers, devices=all_devices, rents=all_rents, services=all_services)
 
 
 @app.route("/customer")
@@ -107,3 +108,23 @@ def rents():
     devices = device.get_devices()
     all_customers = customers.get_customers()
     return render_template("/rents.html", devices = devices, customers = all_customers)
+
+@app.route("/services", methods=["GET", "POST"])
+def services():
+    devices = device.get_devices()
+    services = service.get_services()
+    return render_template("/add_service.html", devices = devices, services = services)
+
+@app.route("/add_service", methods=["GET", "POST"])
+def add_service():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    device_id = request.form["device_id"]
+    service_date = request.form["service_date"]
+    description = request.form["description"]
+    message = service.add_service(device_id, service_date, description)
+    if message == "1":
+        return render_template("/main_page.html")
+    else: 
+        return render_template("error.html", message = message)
+    

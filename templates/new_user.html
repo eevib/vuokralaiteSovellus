@@ -1,6 +1,7 @@
-<b>Tervetuloa!</b>
+<title>Uusi käyttäjä</title>
+<h1>Vuokralaitesovellus</h1>
 <p>Luo tunnus</p>
-<form action="/register" method="POST">
+<form action="/register" method="POST" onsubmit="return check(this)">
 Anna käyttäjätunnus: <input type="text" name="username">
 <p>
 Anna salasana: <input type="password" name="password">
@@ -8,3 +9,17 @@ Anna salasana: <input type="password" name="password">
 <input type="submit" value="Luo tunnus">
 </form>
 <a href="/">Palaa kirjautumissivulle</a> </br> 
+
+<script>
+function check(form) {
+    if(form.username.value.length > 20 || form.username.value.length < 3) {
+        alert("Käyttäjätunnus on oltava 3-20 merkkiä pitkä.")
+        return false;
+    }
+    if (form.password.value.length > 20 || form.password.value.length < 3) {
+        alert("Salasana on oltava 3-20 merkkiä pitkä.");
+        return false;
+    }   
+    return true;
+    }
+</script>

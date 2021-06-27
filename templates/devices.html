@@ -1,3 +1,5 @@
+<title>Laitteet</title>
+<h1>Laitteet</h1>
 <p>Lisää laite</p>
 <form action="/add_device" method="POST" onsubmit="return check(this)">
 Tyyppi: <input type="text" name="device_type">
@@ -9,16 +11,19 @@ Kuvaus: <input type="text" name="description">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <a href="/main_page">Etusivulle</a> </br> 
-<a href="/logout">Kirjaudu ulos</a> </br>
+<a href="/customer"> Lisää asiakas</a> </br>
+<a href="/rents">Vuokraa laite</a> </br>
+<a href="/services">Lisää huolto</a> </br>
+<a href="/logout">Kirjaudu ulos</a> </br> 
 
 <script>
 function check(form) {
-    if(form.device_type.value.length > 50) {
-        alert("Tyyppi on liian pitkä")
+    if(form.device_type.value.length > 50 || form.device_type.value.length < 1) {
+        alert("Tyyppi on oltava 1-50 merkkiä pitkä")
         return false;
     }
-    if (form.model.value.length > 50) {
-        alert("Malli on liian pitkä");
+    if (form.model.value.length > 50 || form.model.value.length < 1) {
+        alert("Malli on oltava 1-50 merkkiä pitkä");
         return false;
     }
     if (form.description.value.length > 300) {

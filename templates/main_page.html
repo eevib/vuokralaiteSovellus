@@ -19,9 +19,16 @@
 <li> Vuokra-aika: {{ rent[2].strftime("%d.%m.%Y") }}-{{ rent[3].strftime("%d.%m.%Y") }} &nbsp Asiakas: {{ rent[0] }}  &nbsp Asiakkaan sähköposti: {{ rent[1] }} &nbsp Laite: {{ rent[5] }}. {{ rent[4] }}
 {% endfor %}
 </ul>
-<a href="/customer"> Lisää uusi asiakas</a> </br>
+Huollot:
+<ul>
+{% for service in services %}
+<li> Laitetyyppi: {{ service[0] }}, laitemalli: {{ service[1] }}, huoltopäivä: {{ service[2].strftime("%d.%m.%Y") }}, huollon kuvaus: {{ service[3] }}
+{% endfor %}
+</ul>
+<a href="/customer"> Lisää asiakas</a> </br>
 <a href="/devices">Lisää laite</a> </br>
 <a href="/rents">Vuokraa laite</a> </br>
+<a href="/services">Lisää huolto</a> </br>
 <a href="/logout">Kirjaudu ulos</a> </br> 
 
 

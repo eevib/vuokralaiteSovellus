@@ -1,6 +1,5 @@
 <title>Vuokraus</title>
-<h1>Tervetuloa!</h1>
-<p>Olet kirjautunut nimellä {{ session.username }} </p>
+<h1>Vuokraa laite</h1>
 <form action="/add_rent" method="POST" onsubmit="return check(this)">
 Laite id: <input type="text" name="device_id">
 <p>
@@ -42,7 +41,9 @@ function check(form) {
 <li> Id: {{ customer[2] }}. Nimi: {{ customer[0] }} &nbsp &nbsp Sähköposti: {{ customer[1] }}
 {% endfor %}
 </ul>
-<a href="/customer"> Lisää uusi asiakas</a> </br>
+<a href="/main_page">Etusivulle</a> </br> 
+<a href="/customer"> Lisää asiakas</a> </br>
 <a href="/devices">Lisää laite</a> </br>
-<a href="/main_page">Etusivulle</a> </br>
+<a href="/rents">Vuokraa laite</a> </br>
+<a href="/services">Lisää huolto</a> </br>
 <a href="/logout">Kirjaudu ulos</a> </br> 
